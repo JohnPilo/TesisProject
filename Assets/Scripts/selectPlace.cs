@@ -57,6 +57,7 @@ public class selectPlace : MonoBehaviour {
 
     private void OnMouseDown()
     {
+        print("hola");
         if (isAvaible)
         {
             cheat.transform.LookAt(transform.position);

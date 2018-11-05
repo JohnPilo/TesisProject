@@ -1,0 +1,25 @@
+fileFormatVersion: 2
+guid: f355faf3a8132494f929bc0414aa05a1
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: GoGo Hack
+  fontNames:
+  - GoGo Hack
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 8d2827a08daeb0b4d9d13ae87327334a, type: 3}
+  - {fileID: 12800000, guid: ae592498de828e54cbc3c6442b8ad245, type: 3}
+  - {fileID: 12800000, guid: 0be8801c53ab8af4c99e7ceae76420b8, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

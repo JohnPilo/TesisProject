@@ -21,13 +21,13 @@ public class SpawnObjects : MonoBehaviour {
         if (!manageGame.buttonPressed) {
             switch (thisButton)
             {
-                case "BateriaButton":
+                case "Button_BateriaA":
                     spawnObject(0);
                     break;
-                case "PanelSolarButton":
+                case "Button_PanelA":
                     spawnObject(1);
                     break;
-                case "ReguladorButton":
+                case "Button_ReguladorA":
                     spawnObject(2);
                     break;
             }
