@@ -72,9 +72,9 @@ public class interactWithWorld : MonoBehaviour {
         }
     }
 
-    private void FixedUpdate()
+    /*private void FixedUpdate()
     {
-        rigi.AddTorque(-transform.up * mouseX * 3);
-        rigi.AddTorque(-transform.right * mouseY * 3);
-    }
+        //rigi.AddTorque(transform.up * mouseX * 3);
+        //rigi.AddTorque(transform.right * mouseY * 3);
+    }*/
 }

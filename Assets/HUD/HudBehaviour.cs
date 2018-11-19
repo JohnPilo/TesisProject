@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class HudBehaviour : MonoBehaviour {
@@ -21,6 +22,11 @@ public class HudBehaviour : MonoBehaviour {
 	}
 
     #region AbrirPaneles
+
+    public void Volver()
+    {
+        SceneManager.LoadScene(0, LoadSceneMode.Single);
+    }
 
     public void AbrirPanelSolar()
     {
