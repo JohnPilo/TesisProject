@@ -62,13 +62,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\GameManager.cs" />
+    <Compile Include="Assets\Scripts\demandController.cs" />
+    <Compile Include="Assets\Scripts\demandTest.cs" />
     <Compile Include="Assets\Scripts\interactWithWorld.cs" />
     <Compile Include="Assets\Scripts\moveCamera.cs" />
     <Compile Include="Assets\Scripts\placeOnWorld.cs" />
     <Compile Include="Assets\Scripts\selectPlace.cs" />
     <Compile Include="Assets\Scripts\SpawnObjects.cs" />
-    <Compile Include="Assets\Sprites\HUD\HudBehaviour.cs" />
-    <Compile Include="Assets\Sprites\HUD\InfoButton.cs" />
+    <Compile Include="Assets\Sprites\Originals\HUD\HudBehaviour.cs" />
+    <Compile Include="Assets\Sprites\Originals\HUD\InfoButton.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>C:/Users/lauta/Desktop/TesisProject/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
