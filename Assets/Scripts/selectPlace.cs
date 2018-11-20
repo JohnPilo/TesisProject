@@ -84,7 +84,7 @@ public class selectPlace : MonoBehaviour {
     {
         if (other.gameObject.tag == "MainCamera")
         {
-            SceneManager.LoadScene("Scene 2", LoadSceneMode.Additive);
+            SceneManager.LoadScene("Scene 2", LoadSceneMode.Single);
             Camera.main.GetComponent<Rigidbody>().velocity = Vector3.zero;
             Destroy(Camera.main.GetComponent<BoxCollider>());
             Destroy(Camera.main.GetComponent<Rigidbody>());
