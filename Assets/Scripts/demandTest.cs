@@ -13,20 +13,10 @@ public class demandTest : MonoBehaviour {
         currentDemand = totalDemand;
 	}
 
-    private void OnTriggerEnter(Collider other)
+    private void batteryDetected()
     {
-        if (other.gameObject.tag == "Panel Solar")
-        {
-            currentDemand -= 200;
-        }
+        currentDemand -= 320;
     }
-    /*
-    private void OnCollisionStay(Collision other)
-    {
-        if (other.gameObject.tag == "Panel Solar")
-        {
-            currentDemand -= 200;
-        }
-    }*/
+    
 
 }

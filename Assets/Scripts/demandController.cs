@@ -27,6 +27,7 @@ public class demandController : MonoBehaviour {
         else
         {
             changeBar.x = 3.5f;
+            barPercentage.transform.localScale = changeBar;
         }
 	}
 }

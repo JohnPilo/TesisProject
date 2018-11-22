@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour {
 
     public bool buttonPressed = false;
     public bool receiving = false;
-    public Vector3 receivingObjectPosition;
+    public Transform receivingObjectTransform;
     public string receivingName;
 
     public float energyLevel = 0;

@@ -6,6 +6,8 @@ TagManager:
   tags:
   - GameManager
   - Panel Solar
+  - Regulador
+  - Bateria
   layers:
   - Default
   - TransparentFX
@@ -17,7 +19,7 @@ TagManager:
   - 
   - PostProcessing
   - Objects
-  - 
+  - Colliders
   - 
   - 
   - 

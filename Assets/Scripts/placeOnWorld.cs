@@ -9,9 +9,6 @@ public class placeOnWorld : MonoBehaviour {
     GameManager managingGame;
     public LineRenderer cable;
 
-    bool panelCheck = false;
-    bool bateriaCheck = false;
-
     bool goodPositioning = false;
 
     public Transform[] raycastPoints = new Transform[4];
@@ -20,11 +17,18 @@ public class placeOnWorld : MonoBehaviour {
 
     Color myColor;
     // Bit shift the index of the layer (8) to get a bit mask
-    int layerMask = 1 << 9;
+    int layerMask = 1 << 10;
 
+    string thisName;
+
+    public bool solarConnected;
+    public bool regulatorConnected = false;
+
+    public bool energyFlow = false;
 
     private void Start()
     {
+        thisName = gameObject.tag;
         // This would cast rays only against colliders in layer 8.
         // But instead we want to collide against everything except layer 8. The ~ operator does this, it inverts a bitmask.
         layerMask = ~layerMask;
@@ -41,6 +45,66 @@ public class placeOnWorld : MonoBehaviour {
 
     private void Update()
     {
+        if (!positioning)
+        {
+            Ray objectPos = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(objectPos, out hit, Mathf.Infinity, layerMask))
+            {
+                if (hit.transform.gameObject.tag == thisName)
+                {
+                    if (!managingGame.receiving)
+                    {
+                        managingGame.receivingObjectTransform = transform;
+                        managingGame.receivingName = this.tag;
+                        managingGame.receiving = true;
+                    }
+                    else if (managingGame.receiving)
+                    {
+                        switch (managingGame.receivingName)
+                        {
+                            case "Panel Solar":
+                                if (thisName == "Bateria")
+                                {
+                                    LineRenderer cableClone = Instantiate(cable, transform.position, transform.rotation);
+                                    cableClone.SetPosition(0, transform.position);
+                                    cableClone.SetPosition(1, managingGame.receivingObjectTransform.position);
+                                    solarConnected = true;
+                                    Destroy(managingGame.receivingObjectTransform.GetComponent<placeOnWorld>());
+                                }
+                                break;
+                            case "Bateria":
+                                if (thisName == "Panel Solar" || thisName == "Regulador")
+                                {
+                                    LineRenderer cableClone = Instantiate(cable, transform.position, transform.rotation);
+                                    cableClone.SetPosition(0, transform.position);
+                                    cableClone.SetPosition(1, managingGame.receivingObjectTransform.position);
+                                    if (thisName == "Panel Solar")
+                                    {
+                                        managingGame.receivingObjectTransform.GetComponent<placeOnWorld>().solarConnected = true;
+                                        Destroy(this.GetComponent<placeOnWorld>());
+                                    }
+                                    if (thisName == "Regulador")
+                                    {
+                                        managingGame.receivingObjectTransform.GetComponent<placeOnWorld>().regulatorConnected = true;
+                                    }
+                                }
+                                break;
+                            case "Regulador":
+                                if (thisName == "Bateria")
+                                {
+                                    LineRenderer cableClone = Instantiate(cable, transform.position, transform.rotation);
+                                    cableClone.SetPosition(0, transform.position);
+                                    cableClone.SetPosition(1, managingGame.receivingObjectTransform.position);
+                                    regulatorConnected = true;
+                                }
+                                break;
+                        }
+                        managingGame.receiving = false;
+                    }
+                }
+            }
+        }
         if (positioning)
         {
             Ray objectPos = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -52,10 +116,10 @@ public class placeOnWorld : MonoBehaviour {
                 for (int i = 0; i < raycastPoints.Length; i++)
                 {
                     RaycastHit hit2;
-                    
+
                     if (Physics.Raycast(raycastPoints[i].position, -transform.forward, out hit2, 0.5f, layerMask))
                     {
-                            goodPositioning = true;
+                        goodPositioning = true;
                         gameObject.GetComponent<Renderer>().material.color = Color.green;
                         Debug.Log("why do i exist");
                     }
@@ -67,9 +131,9 @@ public class placeOnWorld : MonoBehaviour {
                     }
                 }
             }
-            
+
         }
-        if (Input.GetMouseButtonDown(0) &&  positioning && goodPositioning)
+        if (Input.GetMouseButtonDown(0) && positioning && goodPositioning)
         {
             positioning = false;
             managingGame.buttonPressed = false;
@@ -78,53 +142,27 @@ public class placeOnWorld : MonoBehaviour {
             gameObject.GetComponent<MeshCollider>().convex = true;
             gameObject.AddComponent<Rigidbody>();
             gameObject.GetComponent<Rigidbody>().useGravity = false;
+            gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         }
-        if(panelCheck && bateriaCheck)
+        if (solarConnected && regulatorConnected)
         {
-            managingGame.energyLevel += 10;
-            panelCheck = false;
-            bateriaCheck = false;
+           ExplosionDamage(myTransform.position, 10);
+           solarConnected = false;
         }
     }
 
-    private void OnMouseDown()
+    void ExplosionDamage(Vector3 center, float radius)
     {
-        if (!positioning)
+        Collider[] hitColliders = Physics.OverlapSphere(center, radius);
+        int i = 0;
+        while (i < hitColliders.Length)
         {
-            if (!managingGame.receiving)
+            Debug.Log(i.ToString());
+            if (hitColliders[i].GetComponent<demandTest>() != null)
             {
-                managingGame.receivingObjectPosition = transform.position;
-                managingGame.receivingName = this.name;
-                managingGame.receiving = true;
+                hitColliders[i].SendMessage("batteryDetected");
             }
-            else if (managingGame.receiving)
-            {
-                LineRenderer cableClone = Instantiate(cable, transform.position, transform.rotation);
-                cableClone.SetPosition(0, transform.position);
-                cableClone.SetPosition(1, managingGame.receivingObjectPosition);
-
-                managingGame.receiving = false;
-            }
+            i++;
         }
-
     }
-    /*
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.black;
-        for (int i = 0; i <= raycastPoints.Length; i++)
-        {
-            Ray anchorPoint = new Ray(raycastPoints[i].position, -transform.up);
-            RaycastHit hit1;
-            if (goodPositioning)
-            {
-                Gizmos.color = Color.green;
-            }
-            else
-            {
-                Gizmos.color = Color.red;
-            }
-        }
-    }*/
-
 }
