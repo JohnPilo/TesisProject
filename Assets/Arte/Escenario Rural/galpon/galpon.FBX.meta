@@ -1,20 +1,14 @@
 fileFormatVersion: 2
-guid: 9fbb30868fee58048a89ee1bc8b289d2
+guid: f5c7bae0842e4e048ac0da3486fac983
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: //RootNode
     400000: //RootNode
-    2100000: 'Material #62'
-    2100002: 'Material #57'
-    2100004: 'Material #63'
-    2100006: 'Material #60'
-    2100008: 'Material #61'
-    2100010: 'Material #59'
-    2100012: 'Material #58'
+    2100000: No Name
     2300000: //RootNode
     3300000: //RootNode
-    4300000: galpon
+    4300000: Galpon
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -87,7 +81,6 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     rootMotionBoneName: 
-    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
